@@ -1,0 +1,59 @@
+import { Button, VerticalBox, LineEdit , ComboBox, HorizontalBox} from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    in property <string> results: "";
+    // callback change_to_twd(string);
+    callback change_to_twd(string, string);
+    background: #324563;
+    VerticalLayout {
+        padding: 25px;
+        spacing: 25px;
+        HorizontalLayout {
+            Text {
+                text: "換台幣!!";
+                horizontal-alignment: center;  
+                font-size: 24px;
+                font-weight: 900;
+            }
+        }
+        HorizontalLayout {
+                money := ComboBox {
+                    width: self.preferred-width + 10px;
+                    height: self.preferred-height + 5px;
+                    model: ["USD", "HKD", "GBP", "AUD", "CAD", "SGD", "CHF", "JPY", "ZAR", "SEK", "NZD", "THB", "PHP", "IDR", "EUR", "KRW", "VND", "MYR", "CNY"];
+                    current-value: "USD";
+                }
+        }
+        HorizontalLayout {
+            number := LineEdit {
+                horizontal-alignment: center;
+                font-size: 16px;
+                placeholder-text: "輸入";
+                height: 35px;
+            }
+        }
+        HorizontalLayout {
+            Button {
+                text: "計算匯率";
+                primary: true;
+                height: 35px;
+                // clicked => {change_to_twd(number.text)}
+                clicked => {change_to_twd(number.text, money.current-value)}
+            }
+        }
+        HorizontalLayout {
+            VerticalBox {
+                Rectangle {
+                    height: 100px;
+                    background: #f2f2f2;
+                    Text {
+                        color: black;
+                        font-size: 16px;
+                        font-weight: 900;
+                        text: root.results;
+                    }
+                }
+            }
+        }
+    }
+}
